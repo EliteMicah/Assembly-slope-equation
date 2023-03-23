@@ -61,12 +61,15 @@ main:
 
     movq x, %rdx        # move x to rdx register
     subq $0x30, %rdx    # subtract ASCII value for '0' to convert to number
+    
     movq m, %rax        # move m to rax register
     subq $0x30, %rax    # subtract ASCII value for '0' to convert to number
     imulq %rdx, %rax    # multiply by x and store result in register
+    
     movq b, %rdi        # move b to rdi register
     subq $0x30, %rdi    # subtract ASCII value for '0' to convert to number
     addq %rdi, %rax     # add b and store result in register
+    
     addq $0x30, %rax    # add ASCII value for '0' to convert back to ASCII
     movq %rax, y        # store ASCII value back in y
 
