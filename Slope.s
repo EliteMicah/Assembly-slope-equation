@@ -56,20 +56,19 @@ main:
 	movq $0x2, %rdx     # size    
 	int $0x80           # system interrupt to kernel
 
-# Multipliation y = mx + b
-    # Arithmetic done in the register
+# Arithmetic done in the register
+    # Multipliation y = mx + b
 
-    movl y, %edx        # move y to edx register
-    subl $0x30, %edx    # subtract ASCII value for '0' to convert to number
-    
-    movq m, %rax        # Multiply m
-    imulq x, %rax       # by x and store result in register
-    addq b, %rax        # add b and store result in register
-    movq %rax, y        # return register value to y
-    
-    # Convert y back to ASCII
-    addl $0x30, %edx    # add ASCII value for '0' to convert back to ASCII
-    movl %edx, y        # store ASCII value back in y & remove y from register
+    movq x, %rdx        # move x to rdx register
+    subq $0x30, %rdx    # subtract ASCII value for '0' to convert to number
+    movq m, %rax        # move m to rax register
+    subq $0x30, %rax    # subtract ASCII value for '0' to convert to number
+    imulq %rdx, %rax    # multiply by x and store result in register
+    movq b, %rdi        # move b to rdi register
+    subq $0x30, %rdi    # subtract ASCII value for '0' to convert to number
+    addq %rdi, %rax     # add b and store result in register
+    addq $0x30, %rax    # add ASCII value for '0' to convert back to ASCII
+    movq %rax, y        # store ASCII value back in y
 
 # Output Message
     movq $4, %rax       # sys_write    
@@ -89,3 +88,4 @@ main:
 	movl $0, %ebx       # 0 is return value    
 	int  $0x80          # system interrupt to kernel    
 	ret
+	
